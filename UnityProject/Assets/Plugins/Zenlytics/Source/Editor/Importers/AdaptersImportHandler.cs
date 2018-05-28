@@ -12,30 +12,6 @@ namespace Zenlytics.Editor.Importers
     public class AdaptersImportHandler : AssetPostprocessor
     {
 
-        private static AnalyticsManager s_AnalyticsManager;
-
-        public static AnalyticsManager AnalyticsManager
-        {
-            get
-            {
-                if (s_AnalyticsManager != null)
-                {
-                    return s_AnalyticsManager;
-                }
-
-                string[] guids = AssetDatabase.FindAssets($"t:{typeof(AnalyticsManager)}");
-                if (guids == null || guids.Length == 0)
-                {
-                    return null;
-                }
-
-                string assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
-                s_AnalyticsManager = AssetDatabase.LoadAssetAtPath<AnalyticsManager>(assetPath);
-
-                return s_AnalyticsManager;
-            }
-        }
-
         private static void OnPostprocessAllAssets(
             string[] importedAssets,
             string[] deletedAssets,
@@ -64,7 +40,7 @@ namespace Zenlytics.Editor.Importers
                 return;
             }
 
-            var serializedObject = new SerializedObject(AnalyticsManager);
+            var serializedObject = new SerializedObject(ImportHandler.AnalyticsManager);
             SerializedProperty events = serializedObject.FindProperty("m_AnalyticsAdapters");
             for (int i = 0; i < events.arraySize; i++)
             {
