@@ -25,7 +25,7 @@ namespace Zenlytics.Fields
             }
         }
 
-        public int GetValue(object argument)
+        public int GetValue(object[] args)
         {
             if (UseConstant)
 
@@ -33,7 +33,9 @@ namespace Zenlytics.Fields
                 return m_Value;
             }
 
-            return 0;
+            object valueObj = GetObjectValue(args);
+            int value = int.Parse(valueObj.ToString());
+            return value;
         }
 
     }

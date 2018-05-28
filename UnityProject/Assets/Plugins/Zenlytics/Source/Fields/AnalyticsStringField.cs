@@ -23,14 +23,15 @@ namespace Zenlytics.Fields
             }
         }
 
-        public string GetValue(object argument)
+        public string GetValue(object[] args)
         {
             if (UseConstant)
             {
                 return m_Value;
             }
 
-            return null;
+            object valueObj = GetObjectValue(args);
+            return valueObj.ToString();
         }
 
     }
