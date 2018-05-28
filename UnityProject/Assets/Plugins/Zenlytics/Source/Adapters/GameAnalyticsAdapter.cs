@@ -1,4 +1,4 @@
-﻿//using GameAnalyticsSDK;
+﻿using GameAnalyticsSDK;
 
 using UnityEngine;
 
@@ -20,9 +20,7 @@ namespace Zenlytics.Adapters
             string receipt,
             string signature)
         {
-            /*
             GameAnalytics.NewBusinessEvent(currency, amount, itemType, itemId, cartType);
-        */
         }
 
         public override void ReportResourceEvent(
@@ -32,10 +30,8 @@ namespace Zenlytics.Adapters
             string itemType,
             string itemId)
         {
-            /*
             var flowType = (GAResourceFlowType) type;
             GameAnalytics.NewResourceEvent(flowType, currency, amount, itemType, itemId);
-            */
         }
 
         public override void ReportProgressionEvent(
@@ -45,7 +41,6 @@ namespace Zenlytics.Adapters
             string p03,
             int score)
         {
-            /*
             if (string.IsNullOrEmpty(p01))
             {
                 return;
@@ -68,22 +63,17 @@ namespace Zenlytics.Adapters
             {
                 GameAnalytics.NewProgressionEvent(progressionStatus, p01, score);
             }
-            */
         }
 
         public override void ReportErrorEvent(ErrorSeverity severity, string message)
         {
-            /*
             var errorSeverity = (GAErrorSeverity) severity;
             GameAnalytics.NewErrorEvent(errorSeverity, message);
-            */
         }
 
         public override void ReportDesignEvent(string eventName, float eventValue)
         {
-            /*
             GameAnalytics.NewDesignEvent(eventName, eventValue);
-            */
         }
 
     }

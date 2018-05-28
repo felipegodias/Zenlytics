@@ -33,10 +33,23 @@ namespace Zenlytics.Adapters
             string itemType,
             string itemId)
         {
-            string eventNameFormat = "resource.{0}.{1}.{2}.{3}";
-            string eventName = string.Format(eventNameFormat, type, currency, itemType, itemId);
-            var dictionary = new Dictionary<string, object>();
-            dictionary.Add("amount", amount);
+            string eventNameFormat = "resource.{0}";
+            string eventName = string.Format(eventNameFormat, type);
+            var dictionary = new Dictionary<string, object>
+            {
+                {
+                    "currency", currency
+                },
+                {
+                    "amount", amount
+                },
+                {
+                    "itemType", itemType
+                },
+                {
+                    "itemId", itemId
+                }
+            };
             UnityAnalytics.CustomEvent(eventName, dictionary);
         }
 
@@ -48,21 +61,26 @@ namespace Zenlytics.Adapters
             int score)
         {
             string eventName = "progression." + status;
-            if (!string.IsNullOrEmpty(p01))
+
+            var dictionary = new Dictionary<string, object>
             {
-                eventName += "." + p01;
-                if (!string.IsNullOrEmpty(p02))
                 {
-                    eventName += "." + p02;
-                    if (!string.IsNullOrEmpty(p03))
-                    {
-                        eventName += "." + p03;
-                    }
+                    "progression01", p01
+                },
+                {
+                    "score", score
+                }
+            };
+
+            if (!string.IsNullOrEmpty(p02))
+            {
+                dictionary.Add("progression02", p02);
+                if (!string.IsNullOrEmpty(p03))
+                {
+                    dictionary.Add("progression03", p03);
                 }
             }
 
-            var dictionary = new Dictionary<string, object>();
-            dictionary.Add("score", score);
             UnityAnalytics.CustomEvent(eventName, dictionary);
         }
 
