@@ -29,7 +29,7 @@ namespace Zenlytics.Managers
             SceneManager.activeSceneChanged += OnActiveSceneChanged;
             foreach (AnalyticsEvent analyticsEvent in m_AnalyticsEvents)
             {
-                analyticsEvent.Initialize();
+                analyticsEvent.Initialize(this);
             }
         }
 

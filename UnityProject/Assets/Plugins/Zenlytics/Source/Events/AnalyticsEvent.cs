@@ -21,7 +21,6 @@ namespace Zenlytics.Events
         [SerializeField]
         private string m_SignalToListen;
 
-        [Inject]
         private IAnalyticsManager m_AnalyticsManager;
 
         private InjectContext m_InjectContext;
@@ -38,8 +37,10 @@ namespace Zenlytics.Events
             }
         }
 
-        public void Initialize()
+        public void Initialize(IAnalyticsManager analyticsManager)
         {
+            m_AnalyticsManager = analyticsManager;
+
             Type contractType = Type.GetType(m_SignalToListen);
 
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
@@ -111,7 +112,6 @@ namespace Zenlytics.Events
         // Do not remove, this is called by reflection.
         private void OnSignalFired()
         {
-            Debug.LogFormat("AnalyticsEvent.OnSignalFired()");
             HandleOnSignalFired();
         }
 
@@ -119,7 +119,6 @@ namespace Zenlytics.Events
         private void OnSignalFired(object a)
         {
             a = GetObjectOf(a);
-            Debug.LogFormat("AnalyticsEvent.OnSignalFired(a:{0})", a);
             HandleOnSignalFired(a);
         }
 
@@ -128,7 +127,6 @@ namespace Zenlytics.Events
         {
             a = GetObjectOf(a);
             b = GetObjectOf(b);
-            Debug.LogFormat("AnalyticsEvent.OnSignalFired(a:{0}, b:{1})", a, b);
             HandleOnSignalFired(a, b);
         }
 
@@ -138,7 +136,6 @@ namespace Zenlytics.Events
             a = GetObjectOf(a);
             b = GetObjectOf(b);
             c = GetObjectOf(c);
-            Debug.LogFormat("AnalyticsEvent.OnSignalFired(a:{0}, b:{1}, c:{2})", a, b, c);
             HandleOnSignalFired(a, b, c);
         }
 
@@ -149,7 +146,6 @@ namespace Zenlytics.Events
             b = GetObjectOf(b);
             c = GetObjectOf(c);
             d = GetObjectOf(d);
-            Debug.LogFormat("AnalyticsEvent.OnSignalFired(a:{0}, b:{1}, c:{2}, d:{3})", a, b, c, d);
             HandleOnSignalFired(a, b, c, d);
         }
 
