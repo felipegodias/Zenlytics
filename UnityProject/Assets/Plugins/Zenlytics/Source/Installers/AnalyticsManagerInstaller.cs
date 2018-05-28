@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 using Zenject;
@@ -18,9 +16,7 @@ namespace Zenlytics.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<AnalyticsManager>().FromInstance(m_AnalyticsManager).AsSingle();
-            Container.Bind<ITickable>().FromInstance(m_AnalyticsManager).AsSingle();
-            Container.Bind<IDisposable>().FromInstance(m_AnalyticsManager).AsSingle();
+            Container.BindInterfacesAndSelfTo<AnalyticsManager>().FromInstance(m_AnalyticsManager).AsSingle();
         }
 
     }

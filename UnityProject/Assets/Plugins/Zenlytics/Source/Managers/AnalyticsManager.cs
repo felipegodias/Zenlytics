@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using Zenject;
 
@@ -12,7 +13,7 @@ namespace Zenlytics.Managers
 {
 
     [CreateAssetMenu(fileName = "AnalyticsManager", menuName = "Analytics/Manager")]
-    public class AnalyticsManager : ScriptableObject, ITickable, IDisposable, IAnalyticsManager
+    public class AnalyticsManager : ScriptableObject, IInitializable, ITickable, IDisposable, IAnalyticsManager
     {
 
         [SerializeField]
@@ -23,6 +24,15 @@ namespace Zenlytics.Managers
 
         private bool m_isInjected;
 
+        public void Initialize()
+        {
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+            foreach (AnalyticsEvent analyticsEvent in m_AnalyticsEvents)
+            {
+                analyticsEvent.Initialize();
+            }
+        }
+
         public void Tick()
         {
             if (m_isInjected)
@@ -31,9 +41,16 @@ namespace Zenlytics.Managers
             }
 
             m_isInjected = true;
+
+            ProjectContext projectContext = ProjectContext.Instance;
+            var sceneContext = FindObjectOfType<SceneContext>();
+
+            DiContainer diContainer = sceneContext != null ? sceneContext.Container : projectContext.Container;
+
             foreach (AnalyticsEvent analyticsEvent in m_AnalyticsEvents)
             {
-                analyticsEvent.Initialize();
+                analyticsEvent.Unlisten();
+                analyticsEvent.Inject(diContainer);
                 analyticsEvent.Listen();
             }
         }
@@ -97,6 +114,11 @@ namespace Zenlytics.Managers
             {
                 analyticsAdapter.ReportDesignEvent(eventName, eventValue);
             }
+        }
+
+        private void OnActiveSceneChanged(Scene arg0, Scene arg1)
+        {
+            m_isInjected = false;
         }
 
     }

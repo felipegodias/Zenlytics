@@ -24,6 +24,7 @@ namespace Zenlytics.Events
         [Inject]
         private IAnalyticsManager m_AnalyticsManager;
 
+        private InjectContext m_InjectContext;
         private object m_SignalInstance;
         private MethodInfo m_ListenMethodInfo;
         private MethodInfo m_UnlistenMethodInfo;
@@ -61,11 +62,27 @@ namespace Zenlytics.Events
 
             m_OnSignalFired = Delegate.CreateDelegate(delegateType, this, onSignalFiredMethodInfo);
 
-            m_SignalInstance = ProjectContext.Instance.Container.Resolve(contractType);
+            m_InjectContext = new InjectContext(null, contractType, null, true);
+        }
+
+        public void Inject(DiContainer diContainer)
+        {
+            if (diContainer == null)
+            {
+                return;
+            }
+
+            m_InjectContext.Container = diContainer;
+            m_SignalInstance = diContainer.Resolve(m_InjectContext);
         }
 
         public void Listen()
         {
+            if (m_SignalInstance == null)
+            {
+                return;
+            }
+
             object[] args =
             {
                 m_OnSignalFired
@@ -76,6 +93,11 @@ namespace Zenlytics.Events
 
         public void Unlisten()
         {
+            if (m_SignalInstance == null)
+            {
+                return;
+            }
+
             object[] args =
             {
                 m_OnSignalFired
