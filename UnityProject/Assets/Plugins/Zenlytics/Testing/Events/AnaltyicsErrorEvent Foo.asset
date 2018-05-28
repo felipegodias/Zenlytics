@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5b65815562c4014fa49da0ee375b31e, type: 3}
-  m_Name: AnaltyicsErrorEvent
+  m_Name: AnaltyicsErrorEvent Foo
   m_EditorClassIdentifier: 
-  m_SignalToListen: BarSignal, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+  m_SignalToListen: FooSignal, Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral,
     PublicKeyToken=null
   m_Severity:
     m_UseConstant: 1
     m_ArgumentIndex: 0
     m_ArgumentProperty: 
-    m_Value: 0
+    m_Value: 1
   m_Message:
-    m_UseConstant: 1
+    m_UseConstant: 0
     m_ArgumentIndex: 0
-    m_ArgumentProperty: 
-    m_Value: 
+    m_ArgumentProperty: Value
+    m_Value: Foo

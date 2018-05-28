@@ -8,18 +8,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1163b155744244aa27231874df6887, type: 3}
-  m_Name: AnalyticsDesignEvent
+  m_Script: {fileID: 11500000, guid: b5b65815562c4014fa49da0ee375b31e, type: 3}
+  m_Name: AnaltyicsErrorEvent Qux
   m_EditorClassIdentifier: 
-  m_SignalToListen: BarSignal, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+  m_SignalToListen: QuxSignal, Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral,
     PublicKeyToken=null
-  m_EventName:
+  m_Severity:
     m_UseConstant: 1
     m_ArgumentIndex: 0
     m_ArgumentProperty: 
-    m_Value: 
-  m_Value:
+    m_Value: 2
+  m_Message:
     m_UseConstant: 1
     m_ArgumentIndex: 0
     m_ArgumentProperty: 
-    m_Value: 0
+    m_Value: Qux
